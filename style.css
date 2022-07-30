@@ -1,53 +1,82 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Serif+Pro&display=swap");
 * {
   padding: 0%;
   margin: 0%;
   box-sizing: border-box;
+  font-family: "Source Serif Pro", serif;
 }
 
 body {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+body table {
+  margin: 5px;
+  width: 600px;
+  max-height: 900px;
+  border: 1px solid black;
+}
+body table tr {
+  max-height: 160px;
+}
+body table tr th {
+  text-align: center;
+}
+body table tr td {
+  min-width: 140px;
+  padding: 5px;
+  border: 1px solid black;
+  text-align: center;
+}
+body table tr td h4 {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  font-size: 1vw;
+  font-weight: 600;
+}
+body table tr td a {
+  text-decoration: none;
+  font-weight: 900;
+  color: red;
+}
+body table tr td p {
+  margin: 0%;
+}
+body table tr td:last-child {
+  max-height: 160px;
+  padding: 0px;
+}
+body table tr td img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+body div.side {
+  display: flex;
   align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  height: 100vh;
-}
-body div.card {
-  width: 210px;
-  height: 280px;
-  border: 2px solid black;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
   flex-direction: column;
+  gap: 5px;
 }
-body div.card img {
-  border-top-right-radius: 7px;
-  border-top-left-radius: 7px;
-  margin-bottom: 2%;
-  width: 100%;
-  height: 40%;
+body div.side select {
+  cursor: pointer;
 }
-body div.card div {
-  flex-basis: 75%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  padding: 0px 5px;
+body div.side p {
+  cursor: pointer;
 }
-body div.card div h4 {
-  text-align: center;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  font-size: 1.1vw;
+body div.side p:hover {
+  font-weight: 900;
 }
-body div.card div a {
-  font-size: 1em;
-  text-decoration: none;
-  color: red;
+
+.shown {
+  display: "";
+}
+
+.hidden {
+  display: none;
 }
 
 /*# sourceMappingURL=style.css.map */
