@@ -1,10 +1,10 @@
 let parsato;
-async function fetchData($){
+async function fetchData(){ //function that fetches articles
     let fetchato = await fetch(`https://api.spaceflightnewsapi.net/v3/articles?_limit=300`)
     parsato = await fetchato.json();
 }
 
-function createTable($articolo){
+function createTable($articolo){ //Function appends and fullfills table row with an article
     let date = new Date($articolo.publishedAt)     
     let joinString = $articolo.newsSite.split(" ").join("")
     document.querySelector('body > div.table > table').appendChild(document.createElement('tr'));
@@ -20,11 +20,11 @@ function createTable($articolo){
 
 fetchData().then(()=>{
     parsato.forEach((item)=>{
-        createTable(item)
+        createTable(item) //create table rows for every article fetched
     })
 
-    let publishers = [];
-    parsato.forEach(item => {
+    let publishers = []; //array of fetched publishers to fullfill select's options names
+    parsato.forEach(item => { 
         if (publishers.includes(item.newsSite)){}
         else{publishers.push(item.newsSite)}
     })
@@ -35,9 +35,9 @@ fetchData().then(()=>{
     select.classList.add("form-select", "form-select-sm", "table-select");
     select.appendChild(document.createElement('option'))
     document.querySelector('.table-select option:last-child').setAttribute("value",'no-filter')
-    document.querySelector('.table-select option:last-child').textContent= 'Filter by publisher..'
+    document.querySelector('.table-select option:last-child').textContent= 'Filter by publisher..' //created first empty option (no-filter)
 
-    publishers.forEach(item => {
+    publishers.forEach(item => { //function that creates options with publishers array's names
         select.appendChild(document.createElement('option'))
         document.querySelector('select.table-select option:last-child').setAttribute("value",`${item}`)
         document.querySelector('select.table-select option:last-child').textContent = `${item}`
@@ -46,14 +46,14 @@ fetchData().then(()=>{
     document.querySelector('div.side > div.select').appendChild(document.createElement('p'));
     document.querySelector('select + p:last-child').textContent = '✕'
     
-    document.querySelector("select + p").addEventListener("click",()=>{
+    document.querySelector("select + p").addEventListener("click",()=>{ //event that adds and removes the shown/hidden class when the reset-filter is clicked
             document.querySelector("select + p").style.display = 'none'
             select.value = "nofilter"
             document.querySelectorAll('tr').forEach(item => {item.classList.add('shown')});
             document.querySelectorAll('tr').forEach(item => {item.classList.remove('hidden')});
             })
 
-    select.addEventListener('change',(event)=>{            
+    select.addEventListener('change',(event)=>{  //event that adds/removes shown and hidden classes when table is filtered basing on event.target.value and classnames added to each table row according to its publisher
         
         if(event.target.value==='no-filter'){
         document.querySelectorAll('tr').forEach(item => {item.classList.add('shown')});
@@ -75,11 +75,12 @@ fetchData().then(()=>{
     }
     })
 
+    //creating button for csv download
     document.querySelector('div.side').appendChild(document.createElement('button'))
     document.querySelector('div.side  button').classList.add('btn', 'btn-primary')
     document.querySelector('div.side  button').textContent = 'Download CSV'
 
-    function download_csv(){
+    function download_csv(){ //function that downloads every article shown basing on its article's id
     let filtered = document.querySelectorAll(".shown");
     let ids = [];
     filtered.forEach(item => ids.push(Number(item.id)));
