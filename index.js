@@ -1,6 +1,7 @@
 let parsato;
 async function fetchData(){ //function that fetches articles
-    let fetchato = await fetch(`https://api.spaceflightnewsapi.net/v3/articles?_limit=300`)
+    document.querySelector('div.loading').style.display=''
+    let fetchato = await fetch(`https://api.spaceflightnewsapi.net/v3/articles?_limit=100`)
     parsato = await fetchato.json();
 }
 
@@ -12,13 +13,14 @@ function createTable($articolo){ //Function appends and fullfills table row with
     document.querySelector('table > tr:last-child').setAttribute('id',`${$articolo.id}`)
     document.querySelector('table > tr:last-child').innerHTML = 
     `<td> <h4>${$articolo.title}</h4> </td>
-    <td> <a href="${$articolo.title}">Link</a></td>
+    <td> <a href="${$articolo.url}">Link</a></td>
     <td> <p>Date: ${date.toLocaleDateString()}</p> </td>
     <td> <img src="${$articolo.imageUrl}"></td>
     `
 }
 
 fetchData().then(()=>{
+    document.querySelector('div.loading').style.display='none'
     parsato.forEach((item)=>{
         createTable(item) //create table rows for every article fetched
     })
