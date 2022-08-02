@@ -1,23 +1,13 @@
 let parsato;
-async function fetchData(){
-    let fetchato = await fetch("https://api.spaceflightnewsapi.net/v3/articles ")
+async function fetchData($){
+    let fetchato = await fetch(`https://api.spaceflightnewsapi.net/v3/articles?_limit=300`)
     parsato = await fetchato.json();
 }
 
 function createTable($articolo){
-    // document.querySelector('body').appendChild(document.createElement('div'))
     let date = new Date($articolo.publishedAt)     
     let joinString = $articolo.newsSite.split(" ").join("")
-    // document.querySelector('body > div:last-child').innerHTML = 
-    // `<div class="card ${joinString} shown" id="${$articolo.id}" style="background: url(${$articolo.imageUrl}) center; background-size: 100% 100%;"> 
-    // <div>
-    // <h4> ${$articolo.title} </h4>
-    // <a href="${$articolo.url}" >Link to the full article</a>
-    // <p>Date: ${date.toLocaleDateString()} </p>
-    // </div>
-    // </div>`
-
-    document.querySelector('body > table').appendChild(document.createElement('tr'));
+    document.querySelector('body > div.table > table').appendChild(document.createElement('tr'));
     document.querySelector('table > tr:last-child').classList.add(joinString, 'shown')
     document.querySelector('table > tr:last-child').setAttribute('id',`${$articolo.id}`)
     document.querySelector('table > tr:last-child').innerHTML = 
@@ -26,9 +16,7 @@ function createTable($articolo){
     <td> <p>Date: ${date.toLocaleDateString()}</p> </td>
     <td> <img src="${$articolo.imageUrl}"></td>
     `
-
 }
-
 
 fetchData().then(()=>{
     parsato.forEach((item)=>{
@@ -41,23 +29,25 @@ fetchData().then(()=>{
         else{publishers.push(item.newsSite)}
     })
 
-
-    document.querySelector('div.side').appendChild(document.createElement('select'));
-    let select = document.querySelector('select');
-    select.classList.add("form-select", "form-select-sm");
+    document.querySelector('div.side > div.select').appendChild(document.createElement('select'));
+    document.querySelector('div.side > div.select select').classList.add("form-select", "form-select-sm", "table-select");
+    let select = document.querySelector('select.table-select');
+    select.classList.add("form-select", "form-select-sm", "table-select");
     select.appendChild(document.createElement('option'))
-    document.querySelector('option:last-child').setAttribute("value",'no-filter')
+    document.querySelector('.table-select option:last-child').setAttribute("value",'no-filter')
+    document.querySelector('.table-select option:last-child').textContent= 'Filter by publisher..'
 
     publishers.forEach(item => {
         select.appendChild(document.createElement('option'))
-        document.querySelector('option:last-child').setAttribute("value",`${item}`)
-        document.querySelector('option:last-child').textContent = `${item}`
+        document.querySelector('select.table-select option:last-child').setAttribute("value",`${item}`)
+        document.querySelector('select.table-select option:last-child').textContent = `${item}`
     })
 
-    document.querySelector('div.side').appendChild(document.createElement('p'));
-    document.querySelector('select + p:last-child').textContent = 'Reset filter'
+    document.querySelector('div.side > div.select').appendChild(document.createElement('p'));
+    document.querySelector('select + p:last-child').textContent = '✕'
     
     document.querySelector("select + p").addEventListener("click",()=>{
+            document.querySelector("select + p").style.display = 'none'
             select.value = "nofilter"
             document.querySelectorAll('tr').forEach(item => {item.classList.add('shown')});
             document.querySelectorAll('tr').forEach(item => {item.classList.remove('hidden')});
@@ -68,8 +58,10 @@ fetchData().then(()=>{
         if(event.target.value==='no-filter'){
         document.querySelectorAll('tr').forEach(item => {item.classList.add('shown')});
         document.querySelectorAll('tr').forEach(item => {item.classList.remove('hidden')});
+        document.querySelector("select + p").style.display = 'none'
         }
         else{
+        document.querySelector("select + p").style.display = 'block'
         document.querySelectorAll('tr:not(:first-child)').forEach(item => {
             if(item.classList.contains(event.target.value.split(" ").join(''))){
                 item.classList.add('shown')
@@ -84,8 +76,8 @@ fetchData().then(()=>{
     })
 
     document.querySelector('div.side').appendChild(document.createElement('button'))
-    document.querySelector('button').classList.add('btn', 'btn-primary')
-    document.querySelector('button').textContent = 'Download CSV'
+    document.querySelector('div.side  button').classList.add('btn', 'btn-primary')
+    document.querySelector('div.side  button').textContent = 'Download CSV'
 
     function download_csv(){
     let filtered = document.querySelectorAll(".shown");
@@ -93,11 +85,13 @@ fetchData().then(()=>{
     filtered.forEach(item => ids.push(Number(item.id)));
     let csvArray = [];
     parsato.forEach((item)=> {
+        let date = new Date(item.publishedAt) 
+        let fixedDate = date.toLocaleDateString()
         if(ids.includes(Number(item.id)))
-       csvArray.push([`${item.title}`, `${item.url}`, `${item.newsSite}`, `${item.publishedAt}`])
+       csvArray.push([`${item.title}`, `${item.url}`, `${item.newsSite}`, `${fixedDate}`])
     })
 
-    let csvFile = 'Titolo;URL;Publisher;Date\n'
+    let csvFile = 'Titolo;URL;Publisher;Date;\n'
     csvArray.forEach((riga) => {
         csvFile += riga.join(";");
         csvFile += '\n'
@@ -110,7 +104,7 @@ fetchData().then(()=>{
     download.click();
     }
 
-    document.querySelector('.btn').addEventListener('click',()=>{
+    document.querySelector('div.side button.btn').addEventListener('click',()=>{
         download_csv()
     })
 })
