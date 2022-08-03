@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     data.forEach((element) => {
       calendar.addEvent({
         id: element.id,
-        title: element.title,
+        title: `${element.title}`,
         start: element.publishedAt,
         allDay: false,
         display: "list-item",
