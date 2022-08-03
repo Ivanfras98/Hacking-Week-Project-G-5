@@ -1,5 +1,6 @@
 @use "./feature-tabella";
 @use "./layout.scss";
-.visible{
-    display: none !important;
+@use "./statistiche.scss";
+.visible {
+  display: none !important;
 }
