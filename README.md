@@ -8,3 +8,5 @@ regole base :
 -Creare un modulo scss con nome _sezione.scss ed allegarlo al foglio principale scss tramite @use.
 
 Challenge = https://winter-bush-e31.notion.site/Challenge-Hacking-Week-FS4-a48fb8c37dd44f9a92865858d5ca692a
+
+     
