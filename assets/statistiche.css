@@ -16,6 +16,10 @@ body {
   width: 600px;
 }
 
+.container-fluid {
+  width: 500px;
+}
+
 #myChart {
   margin: 0.5rem;
 }/*# sourceMappingURL=statistiche.css.map */

@@ -1,5 +1,5 @@
 async function newsSite() {
-  const url = "https://api.spaceflightnewsapi.net/v3/articles?_limit=100"; // Url API
+  const url = "https://api.spaceflightnewsapi.net/v3/articles?_limit=300"; // Url API
   const response = await fetch(url);
   const dati = await response.json();
 
@@ -17,9 +17,10 @@ async function newsSite() {
       }).length
     );
   });
-  //console.log(numeri);
-  // Grafico con la percentuale di articoli scritti per Autore
 
+  let totaleArticoli = numeri.reduce((a, b) => a + b);
+
+  // Grafico con la percentuale di articoli scritti per Autore
   const data = {
     labels: orderedAuthor,
     datasets: [
@@ -62,8 +63,20 @@ async function newsSite() {
     type: "pie",
     data: data,
     options: {
-      scales: {},
+      responsive: true,
       plugins: {
+        tooltip: {
+          callbacks: {
+            title: function (context) {
+              let percentuale = (
+                (context[0].parsed / totaleArticoli) *
+                100
+              ).toFixed(1);
+              return `${percentuale}%`;
+            },
+          },
+        },
+        legend: {},
         title: {
           display: true,
           text: "% Provenienza Articolo",
@@ -71,27 +84,8 @@ async function newsSite() {
             size: "22",
           },
         },
-
-        tooltip: {
-          enabled: false,
-        },
-        // funzione che permette la visualizzazione in % dei dati scritti per autore
-        datalabels: {
-          color: "#ffffff",
-          formatter: (value, context) => {
-            const datapoint = context.chart.data.datasets[0].data;
-            function somma(total, datapoint) {
-              return total + datapoint;
-            }
-            const valoreTotale = datapoint.reduce(somma, 0);
-            const valorePercentuale = ((value / valoreTotale) * 100).toFixed(2);
-            const displayValori = [`${value}`, `${valorePercentuale}%`];
-            return displayValori;
-          },
-        },
       },
     },
-    plugins: [ChartDataLabels],
   };
 
   const myChart = new Chart(document.getElementById("myChart"), config);
@@ -100,8 +94,9 @@ newsSite();
 
 let nomiPublisher = [];
 let dateMensili = [];
+let mesi = [];
 
-async function prova() {
+async function articoliPerMese() {
   const url = "https://api.spaceflightnewsapi.net/v3/info";
   const response = await fetch(url, {
     method: "GET",
@@ -115,11 +110,16 @@ async function prova() {
 
   let oggi = new Date();
 
-  dateMensili.push(oggi.toLocaleDateString());
+  dateMensili.push(`${oggi.getMonth() + 1}/${oggi.getFullYear()}`);
 
-  for (let i = 0; i < 12; i++) {
-    oggi.setMonth(oggi.getMonth() - 1);
-    dateMensili.unshift(oggi.toLocaleDateString());
+  for (let i = 0; i < 11; i++) {
+    if (oggi.getMonth() === 0) {
+      dateMensili.unshift(`12/${oggi.getFullYear()}`);
+      oggi.setMonth(oggi.getMonth() - 1);
+    } else {
+      dateMensili.unshift(`${oggi.getMonth()}/${oggi.getFullYear()}`);
+      oggi.setMonth(oggi.getMonth() - 1);
+    }
   }
 
   document
@@ -127,6 +127,11 @@ async function prova() {
     .appendChild(document.createElement("select"));
   document
     .querySelector("div.container select")
+    .appendChild(document.createElement("option"));
+  document.querySelector("div.container select option:last-child").textContent =
+    "Select a publisher..";
+  document
+    .querySelector("div.container select option:last-child")
     .setAttribute("value", "nofilter");
   nomiPublisher.forEach((item, index) => {
     document
@@ -143,46 +148,74 @@ async function prova() {
       .setAttribute("id", `${index + 1}`);
   });
 
+  const ctx = document.getElementById("myChart2").getContext("2d");
+
+  const myChart2 = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: dateMensili,
+      datasets: [
+        {
+          label: "Numero di articoli",
+          data: [],
+          backgroundColor: ["rgba(255, 99, 132, 0.2)"],
+          borderColor: ["rgba(255, 99, 132, 1)"],
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
+
   document
     .querySelector("div.container select")
     .addEventListener("change", async (e) => {
-      if (oggi.getDate() < 10) {
-        // da concludere
-        if (oggi.getMonth() < 10) {
-          const fetchDate = `${oggi.getFullYear()}${(
-            "0" +
-            (oggi.getMonth() + 1)
-          ).slice(-2)}${("0" + oggi.getDate()).slice(-2)}`;
-          const url = `https://api.spaceflightnewsapi.net/v3/articles?newsSite=${e.target.value}&publishedAt_gt=${fetchDate}&_limit=5000`;
-          const fetchiamo = await fetch(url);
-          const fetched = await fetchiamo.json();
-          const mesi = [];
-          const oggiDiNuovo = new Date();
-          const contatoreMesi = new Date();
-          // contatoreMesi.setMonth(contatoreMesi.getMonth() - 1);
+      mesi = [];
+      if (e.target.value === "nofilter") {
+        myChart2.data.datasets[0].data = [];
+        myChart2.update();
+      } else {
+        const fetchDate = `${oggi.getFullYear()}${(
+          "0" +
+          (oggi.getMonth() + 1)
+        ).slice(-2)}${("0" + oggi.getDate()).slice(-2)}`;
 
-          for (let i = 0; i < 12; i++) {
-            let contatore = 0;
+        const url = `https://api.spaceflightnewsapi.net/v3/articles?newsSite=${e.target.value}&publishedAt_gt=${fetchDate}&_limit=5000`;
+        const fetchiamo = await fetch(url);
+        const fetched = await fetchiamo.json();
+        const contatoreMesi = new Date();
 
-            contatoreMesi.setMonth(contatoreMesi.getMonth() - 1);
+        for (let i = 0; i < 12; i++) {
+          let contatore = 0;
 
-            fetched.forEach((element) => {
-              if (
-                element.publishedAt <= oggiDiNuovo.toISOString() &&
-                element.publishedAt >= contatoreMesi.toISOString()
-              ) {
-                // mesi.push(element);
-                contatore++;
-              }
-            });
-            //console.log(contatoreMesi.toISOString(), oggiDiNuovo.toISOString());
-            oggiDiNuovo.setMonth(oggiDiNuovo.getMonth() - 1);
+          fetched.forEach((element) => {
+            const publishedAt = new Date(element.publishedAt);
+            let year = publishedAt.getFullYear();
+            let month = publishedAt.getMonth();
+            // console.log(month, year);
+            if (
+              year == contatoreMesi.getFullYear() &&
+              month == contatoreMesi.getMonth()
+            ) {
+              contatore++;
+            }
+          });
 
-            mesi.unshift(contatore);
-          }
-          console.log(mesi);
+          contatoreMesi.setMonth(contatoreMesi.getMonth() - 1);
+
+          mesi.unshift(contatore);
         }
+        console.log(dateMensili, mesi);
+
+        myChart2.data.datasets[0].data = [...mesi];
+        myChart2.update();
       }
     });
 }
-prova();
+articoliPerMese();
