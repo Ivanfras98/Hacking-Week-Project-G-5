@@ -10,17 +10,16 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  height: 100%;
+  height: 100vh;
+}
+
+.wrapper aside {
+  width: 20%;
 }
 
 .wrapper main {
   width: 100%;
   background-color: red;
-}
-
-.hamburger {
-  display: none;
-  cursor: pointer;
 }
 
 .discord-icon {
@@ -37,25 +36,51 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin-top: 200%;
+  width: 100%;
+  height: 15%;
+}
+
+#list-menu {
+  width: 100%;
+  height: 100%;
+}
+
+#list-menu p {
+  cursor: pointer;
+  text-align: center;
 }
 
 @media (max-width: 768px) {
-  body .hamburger {
-    display: block;
-    width: 7rem;
-    height: 100vh;
-    background-color: #212529;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    -webkit-box-align: start;
-        -ms-flex-align: start;
-            align-items: flex-start;
-    padding-top: 1rem;
+  #nav-bar {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
   }
-  aside {
-    display: none;
+  div.wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    width: 100%;
+    height: 100vh;
+    background-color: red;
+  }
+  div.wrapper > aside {
+    width: 100%;
+    height: 80px;
+    -webkit-box-orient: horizontal !important;
+    -webkit-box-direction: normal !important;
+        -ms-flex-direction: row !important;
+            flex-direction: row !important;
   }
   .bar {
     display: block;
@@ -63,6 +88,27 @@
     height: 3px;
     margin: 5px auto;
     background-color: white;
+  }
+  div.wrapper aside #list-menu {
+    height: 100%;
+    width: 100%;
+    -ms-flex-preferred-size: 75%;
+        flex-basis: 75%;
+    -webkit-box-orient: horizontal !important;
+    -webkit-box-direction: normal !important;
+        -ms-flex-direction: row !important;
+            flex-direction: row !important;
+  }
+  div.wrapper aside #list-menu p {
+    padding: 0;
+    text-decoration: none;
+    margin: 0;
+    font-size: 12px;
+  }
+  .discord-icon {
+    height: 100%;
+    -ms-flex-preferred-size: 25%;
+        flex-basis: 25%;
   }
 }
 /*# sourceMappingURL=layout.css.map */
