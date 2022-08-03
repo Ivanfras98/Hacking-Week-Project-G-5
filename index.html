@@ -4,14 +4,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <link href="./node_modules/fullcalendar/main.css" rel="stylesheet" />
     <script src="./node_modules/fullcalendar/main.js"></script>
     <script src="./scripts/calendar.js" defer></script>
     <script src="./scripts/api.js" defer></script>
     <script src="./scripts/preview.js" defer></script>
     <title>Challenge</title>
-    <link rel="stylesheet" href="./assets/statistiche.css" />
+    <script src="./scripts/index.js" defer></script>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -31,7 +30,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <link href="./layout.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="wrapper">
@@ -84,13 +83,34 @@
       </aside>
       <main>
         <div id="calendar"></div>
-        <div class="tabella">ciao sono la tabella</div>
+
         <div class="chart">
           <div class="container-fluid">
             <canvas id="myChart"></canvas>
           </div>
           <div class="container">
             <canvas id="myChart2"></canvas>
+          </div>
+        </div>
+
+        <div class="tabella">
+          <div class="table">
+            <div class="loading">
+              <div class="pallino"></div>
+              <div class="pallino"></div>
+              <div class="pallino"></div>
+            </div>
+            <div class="side">
+              <div class="select"></div>
+            </div>
+            <table>
+              <tr>
+                <th>Title</th>
+                <th>URL</th>
+                <th>Date</th>
+                <th>Article's image</th>
+              </tr>
+            </table>
           </div>
         </div>
       </main>
