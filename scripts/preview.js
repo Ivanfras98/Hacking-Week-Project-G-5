@@ -1,6 +1,6 @@
 const btn = document.querySelector("#calendar-btn");
-const btnChart = document.querySelector("#table-btn");
-const btnTable = document.querySelector("#chart-btn");
+const btnChart = document.querySelector("#chart-btn");
+const btnTable = document.querySelector("#table-btn");
 
 window.addEventListener("load", () => {
   document.querySelector("main").style.visibility = "hidden";
