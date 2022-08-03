@@ -8,10 +8,10 @@ async function fetchData(){ //function that fetches articles
 function createTable($articolo){ //Function appends and fullfills table row with an article
     let date = new Date($articolo.publishedAt)     
     let joinString = $articolo.newsSite.split(" ").join("")
-    document.querySelector('body > div.table > table').appendChild(document.createElement('tr'));
-    document.querySelector('table > tr:last-child').classList.add(joinString, 'shown')
-    document.querySelector('table > tr:last-child').setAttribute('id',`${$articolo.id}`)
-    document.querySelector('table > tr:last-child').innerHTML = 
+    document.querySelector('body div.wrapper main  div.tabella  div.table  table').appendChild(document.createElement('tr'));
+    document.querySelector('div.table table > tr:last-child').classList.add(joinString, 'shown')
+    document.querySelector('div.table table > tr:last-child').setAttribute('id',`${$articolo.id}`)
+    document.querySelector('div.table table > tr:last-child').innerHTML = 
     `<td> <h4>${$articolo.title}</h4> </td>
     <td> <a href="${$articolo.url}">Link</a></td>
     <td> <p>Date: ${date.toLocaleDateString()}</p> </td>

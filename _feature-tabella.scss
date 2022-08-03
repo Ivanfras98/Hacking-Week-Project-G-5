@@ -5,19 +5,23 @@
     box-sizing: border-box;
     font-family: 'Source Serif Pro', serif;;
 }
-
-body{
+body > div.wrapper > main{
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding-top: 2%;
-    div.table{
+    overflow-y: scroll;
+    div.tabella{
+        display: flex;
+        justify-content: center;
+
+        div.table{
         div.loading{
             display: block;
             display: flex;
             align-items: center;
             justify-content: center;
             position: absolute;
+            right: 50%;
             background: white;
             width: 100%;
             height: 100vh;
@@ -149,6 +153,7 @@ body{
 
         }
     }
+}
 }
 }
 
