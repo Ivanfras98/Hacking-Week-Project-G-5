@@ -1,0 +1,59 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-y: hidden;
+}
+
+.wrapper {
+    display: flex;
+    height: 100%;
+    main {
+        width: 100%;
+        background-color: red;
+    }
+}
+
+.hamburger {
+    display: none;
+    cursor: pointer;
+
+}
+
+.discord-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 200%;
+}
+   
+
+
+@media (max-width: 768px) {
+    body {
+        .hamburger {
+            display: block;
+            width: 7rem;
+            height: 100vh;
+            background-color: #212529;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 1rem;
+        } 
+    }
+
+    aside {
+        display: none;
+    }
+
+   .bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    background-color: white;
+   }
+
+
+}
