@@ -16,13 +16,9 @@ const client = new Discord.Client({
     "GUILD_MESSAGE_REACTIONS",
   ],
 });
-//Prefissi per i comandi
-const PREFIX = "!";
-//Comandi available
-const MODCOMMAND = "mod me";
 //Log per vedere se l'app parte
 client.on("ready", () => {
-  console.log("ciao sono un bot");
+  console.log("I'm online");
 });
 
 const apiData = "https://api.spaceflightnewsapi.net/v3/";
@@ -40,29 +36,56 @@ client.on("message", (msg) => {
       data.forEach((element) => {
         ids.push(element.id);
       });
-      msg.reply(ids.join(", "));
+      msg.reply(`The id's of the available articles are : ${ids.join(", ")}`);
     });
   }
   if (msg.content === "/articles/authors") {
     let authors = [];
-    let lonelyAuthors = [];
     getApi().then((data) => {
       data.forEach((elem) => {
         if (!authors.find((e) => e === elem.newsSite)) {
           authors.push(elem.newsSite);
         }
       });
-      msg.reply(authors.join(", "));
+      msg.reply(`The authors of the available articles are : ${authors.join(", ")}`);
     });
   }
   getApi().then((data) => {
     console.log(data);
     data.forEach((element) => {
       if (msg.content === `/articles/${element.id}`) {
-        msg.reply(element.summary);
+        msg.reply(`The text content of the selected ID is: "${element.summary}"`);
       }
     });
   });
 });
+
+const welcomeCh = "1002605328669610146";
+const communicationCh = "1004418160159633548";
+
+client.on("guildMemberAdd", (member)=>{
+  const welcomeMessage = `Hello <@${member.id}> welcome to the discord server, my name is DevelBot, allow me to guide you during your journey!`;
+  const directionMessage = `Please follow me to the ${member.guild.channels.cache.get(
+    communicationCh
+  )} channel!`;
+  const channel = member.guild.channels.cache.get(welcomeCh);
+  const channel2 = member.guild.channels.cache.get(communicationCh);
+  channel.send(welcomeMessage);
+  setTimeout(() => channel.send(directionMessage), 3000);
+
+  const commMessage = `Hello again <@${member.id}>`;
+  const articlesMessage =
+    "Type /articles to get the full ID list of the articles";
+  const authorsMessage =
+    "Type /articles/authors to get the full authors list of the articles";
+  const textArticles =
+    "Type /articles/ɪᴅ to get the text-content of the article you selected by specifing the ID";
+  
+  setTimeout(() => channel2.send(commMessage), 5000);
+  setTimeout(() => channel2.send(articlesMessage), 6000);
+  setTimeout(() => channel2.send(authorsMessage), 6000);
+  setTimeout(() => channel2.send(textArticles), 6000);X
+
+})
 
 client.login(process.env.BOT_TOKEN);
