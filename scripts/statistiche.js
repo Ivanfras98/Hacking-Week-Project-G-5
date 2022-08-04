@@ -30,7 +30,7 @@ async function newsSite() {
           "rgba(255, 0, 0)",
           "rgba(255, 123, 25)",
           "rgba(99, 222, 12)",
-          "rgba(25, 42, 222)",
+          "rgba(255, 255, 0)",
           "rgba(255, 0, 85)",
           "rgba(15, 122, 172)",
           "rgba(234, 98, 172)",
@@ -44,7 +44,7 @@ async function newsSite() {
           "rgb(255, 0, 0)",
           "rgba(255, 123, 25)",
           "rgba(99, 222, 12)",
-          "rgba(25, 42, 222)",
+          "rgba(255, 255, 0)",
           "rgba(255, 0, 85)",
           "rgba(15, 122, 172)",
           "rgba(234, 98, 172)",
@@ -76,13 +76,18 @@ async function newsSite() {
             },
           },
         },
-        legend: {},
+        legend: {
+          labels: {
+            color: "#fff",
+          },
+        },
         title: {
           display: true,
           text: "% Provenienza Articolo",
           font: {
             size: "22",
           },
+          color: "#fff",
         },
       },
     },
@@ -123,31 +128,35 @@ async function articoliPerMese() {
   }
 
   document
-    .querySelector("div.container")
-    .appendChild(document.createElement("select"));
+    .querySelector("div.container:last-child")
+    .after(document.createElement("select"));
   document
-    .querySelector("div.container select")
+    .querySelector("div.container + select")
     .appendChild(document.createElement("option"));
-  document.querySelector("div.container select option:last-child").textContent =
-    "Select a publisher..";
+  document.querySelector(
+    "div.container + select option:last-child"
+  ).textContent = "Select a publisher..";
   document
-    .querySelector("div.container select option:last-child")
+    .querySelector("div.container + select option:last-child")
     .setAttribute("value", "nofilter");
   nomiPublisher.forEach((item, index) => {
     document
-      .querySelector("div.container > select")
+      .querySelector("div.container + select")
       .appendChild(document.createElement("option"));
     document
-      .querySelector("div.container select option:last-child")
+      .querySelector("div.container + select option:last-child")
       .setAttribute("value", `${index + 1}`);
     document.querySelector(
-      "div.container select option:last-child"
+      "div.container + select option:last-child"
     ).textContent = `${item}`;
     document
-      .querySelector("div.container select option:last-child")
+      .querySelector("div.container + select option:last-child")
       .setAttribute("id", `${index + 1}`);
   });
+  //const selection = document.querySelector("div.container select");
 
+  //selection.classList.add("selection");
+  // selection.style.alignSelf = "flex-end";
   const ctx = document.getElementById("myChart2").getContext("2d");
 
   const myChart2 = new Chart(ctx, {
@@ -158,23 +167,38 @@ async function articoliPerMese() {
         {
           label: "Numero di articoli",
           data: [],
-          backgroundColor: ["rgba(255, 99, 132, 0.2)"],
-          borderColor: ["rgba(255, 99, 132, 1)"],
+          backgroundColor: ["rgba(255, 255, 255, 0.2)"],
+          borderColor: ["rgba(255, 255, 255, 1)"],
           borderWidth: 1,
         },
       ],
     },
     options: {
       scales: {
+        x: {
+          ticks: {
+            color: "#fff",
+          },
+        },
         y: {
+          ticks: {
+            color: "#fff",
+          },
           beginAtZero: true,
+        },
+      },
+      plugins: {
+        legend: {
+          labels: {
+            color: "#fff",
+          },
         },
       },
     },
   });
 
   document
-    .querySelector("div.container select")
+    .querySelector("div.container + select")
     .addEventListener("change", async (e) => {
       mesi = [];
       if (e.target.value === "nofilter") {
@@ -198,7 +222,7 @@ async function articoliPerMese() {
             const publishedAt = new Date(element.publishedAt);
             let year = publishedAt.getFullYear();
             let month = publishedAt.getMonth();
-            // console.log(month, year);
+
             if (
               year == contatoreMesi.getFullYear() &&
               month == contatoreMesi.getMonth()
@@ -211,7 +235,6 @@ async function articoliPerMese() {
 
           mesi.unshift(contatore);
         }
-        console.log(dateMensili, mesi);
 
         myChart2.data.datasets[0].data = [...mesi];
         myChart2.update();
