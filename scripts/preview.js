@@ -2,9 +2,9 @@ const btn = document.querySelector("#calendar-btn");
 const btnChart = document.querySelector("#chart-btn");
 const btnTable = document.querySelector("#table-btn");
 
-window.addEventListener("load", () => {
+// window.addEventListener("load", () => {
   document.querySelector("main").style.visibility = "hidden";
-});
+// });
 
 btn.addEventListener("click", () => {
   document.querySelector("main").style.visibility = "visible";

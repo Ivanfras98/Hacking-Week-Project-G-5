@@ -14,13 +14,15 @@ function createTable($articolo){ //Function appends and fullfills table row with
     document.querySelector('div.table table > tr:last-child').innerHTML = 
     `<td> <h4>${$articolo.title}</h4> </td>
     <td> <a href="${$articolo.url}">Link</a></td>
-    <td> <p>Date: ${date.toLocaleDateString()}</p> </td>
+    <td> <p>Date: ${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}</p> </td>
     <td> <img src="${$articolo.imageUrl}"></td>
     `
 }
 
-fetchData().then(()=>{
+setTimeout(() => {
     document.querySelector('div.loading').style.display='none'
+}, 2500);
+fetchData().then(()=>{
     parsato.forEach((item)=>{
         createTable(item) //create table rows for every article fetched
     })
