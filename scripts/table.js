@@ -91,9 +91,9 @@ fetchData().then(()=>{
     let csvArray = [];
     parsato.forEach((item)=> {
         let date = new Date(item.publishedAt) 
-        let fixedDate = date.toLocaleDateString()
+        date.toISOString;
         if(ids.includes(Number(item.id)))
-       csvArray.push([`${item.title}`, `${item.url}`, `${item.newsSite}`, `${fixedDate}`])
+       csvArray.push([`${item.title}`, `${item.url}`, `${item.newsSite}`, `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`])
     })
 
     let csvFile = 'Titolo;URL;Publisher;Date;\n'

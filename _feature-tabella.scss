@@ -12,7 +12,7 @@ div.loading{
     justify-content: center;
     position: absolute;
     left: 20%;
-    background: white;
+    background: #445d76;
     width: 80%;
     height: 100vh;
     gap: 1rem;
@@ -73,7 +73,7 @@ body > div.wrapper > main{
                 background: linear-gradient(to top, rgba(33, 37, 41, 1), rgba(33, 37, 41, 1));
             }
             &:not(:first-child){
-                background: linear-gradient(to left, rgba(88, 101, 242, .7), rgba(88, 101, 242, .9) );
+                background: linear-gradient(to left, rgba(88, 101, 242, .7), rgba(88, 101, 242, .9))!important;
             }
             max-height: 10%;
             th{
@@ -84,25 +84,21 @@ body > div.wrapper > main{
                 padding: 2%;
                 border: 2px solid #212529;
                 text-align: center;
-
                     h4{
                         font-size: .9em;
                         font-weight: 600;
                         margin: 0%;
                     }
 
-                &:nth-child(2){
-                    transition: 0.2s ease-in-out;
                     a{
                         text-decoration: none;
-                        font-weight: 900;
+                        font-weight: 700;
                         color: white;
-                        transition: 0.2s ease-in-out;
+                        &:hover{
+                            font-weight: 900;
+                        }
                     }
-                    &:hover{
-                            transform: translateY(-10px);
-                    }
-                }
+                    
                     p{
                         margin: 0%;
                     }
@@ -171,6 +167,10 @@ body > div.wrapper > main{
             &:hover{
                 border-color: white;
             }
+            &:focus{
+                box-shadow: none;
+                border-color: none;
+                }
         }
     }
 }
