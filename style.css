@@ -6,64 +6,62 @@
   font-family: "Source Serif Pro", serif;
 }
 
-body > div.wrapper > main {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  overflow-y: scroll;
-}
-body > div.wrapper > main div.tabella {
-  display: flex;
-  justify-content: center;
-}
-body > div.wrapper > main div.tabella div.table {
-  color: black;
-  width: 60%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-direction: column;
-}
-body > div.wrapper > main div.tabella div.table div.loading {
+div.loading {
   display: block;
   display: flex;
   align-items: center;
   justify-content: center;
   position: absolute;
-  right: 50%;
-  background: white;
-  width: 100%;
+  left: 20%;
+  background: #445d76;
+  width: 80%;
   height: 100vh;
   gap: 1rem;
 }
-body > div.wrapper > main div.tabella div.table div.loading::after {
+div.loading::after {
   content: "Loading your content..";
 }
-body > div.wrapper > main div.tabella div.table div.loading div.pallino {
-  background-color: black;
+div.loading div.pallino {
+  background-color: #212529;
   border-radius: 50%;
   width: 10px;
   height: 10px;
-  -webkit-animation: bounce 1s infinite alternate;
-          animation: bounce 1s infinite alternate;
+  animation: bounce 1s infinite alternate;
 }
-body > div.wrapper > main div.tabella div.table div.loading div.pallino:nth-child(2) {
-  -webkit-animation: bounce 1s infinite alternate 0.2s;
-          animation: bounce 1s infinite alternate 0.2s;
+div.loading div.pallino:nth-child(2) {
+  animation: bounce 1s infinite alternate 0.1s;
 }
-body > div.wrapper > main div.tabella div.table div.loading div.pallino:nth-child(3) {
-  -webkit-animation: bounce 1s infinite alternate 0.3s;
-          animation: bounce 1s infinite alternate 0.3s;
-}
-@-webkit-keyframes bounce {
-  100% {
-    transform: translateY(-20px);
-  }
+div.loading div.pallino:nth-child(3) {
+  animation: bounce 1s infinite alternate 0.2s;
 }
 @keyframes bounce {
   100% {
     transform: translateY(-20px);
   }
+}
+
+body > div.wrapper > main {
+  visibility: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-y: scroll;
+  background: #445d76;
+}
+body > div.wrapper > main div.tabella {
+  padding-top: 10px;
+  display: flex;
+  justify-content: center;
+  width: 90%;
+}
+body > div.wrapper > main div.tabella div.table {
+  color: black;
+  font-weight: 600;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
 }
 body > div.wrapper > main div.tabella div.table table {
   padding: 5%;
@@ -75,14 +73,12 @@ body > div.wrapper > main div.tabella div.table table tr {
   max-height: 10%;
 }
 body > div.wrapper > main div.tabella div.table table tr:first-child {
-  border: thin solid black;
-  background: linear-gradient(to top, rgba(44, 62, 80, 0.7), rgba(76, 161, 175, 0.7));
+  color: white;
+  border: 2px solid #212529;
+  background: linear-gradient(to top, rgb(33, 37, 41), rgb(33, 37, 41));
 }
-body > div.wrapper > main div.tabella div.table table tr:nth-child(odd):not(:first-child) {
-  background-image: linear-gradient(to right, rgba(44, 62, 80, 0.7), rgba(76, 161, 175, 0.7));
-}
-body > div.wrapper > main div.tabella div.table table tr:nth-child(even) {
-  background-image: linear-gradient(to left, rgba(44, 62, 80, 0.7), rgba(76, 161, 175, 0.7));
+body > div.wrapper > main div.tabella div.table table tr:not(:first-child) {
+  background: linear-gradient(to left, rgba(88, 101, 242, 0.7), rgba(88, 101, 242, 0.9)) !important;
 }
 body > div.wrapper > main div.tabella div.table table tr th {
   text-align: center;
@@ -90,7 +86,7 @@ body > div.wrapper > main div.tabella div.table table tr th {
 body > div.wrapper > main div.tabella div.table table tr td {
   min-width: 6rem;
   padding: 2%;
-  border: thin solid black;
+  border: 2px solid #212529;
   text-align: center;
 }
 body > div.wrapper > main div.tabella div.table table tr td h4 {
@@ -100,8 +96,11 @@ body > div.wrapper > main div.tabella div.table table tr td h4 {
 }
 body > div.wrapper > main div.tabella div.table table tr td a {
   text-decoration: none;
+  font-weight: 700;
+  color: white;
+}
+body > div.wrapper > main div.tabella div.table table tr td a:hover {
   font-weight: 900;
-  color: red;
 }
 body > div.wrapper > main div.tabella div.table table tr td p {
   margin: 0%;
@@ -131,12 +130,23 @@ body > div.wrapper > main div.tabella div.table div.side div.select {
   gap: 5px;
 }
 body > div.wrapper > main div.tabella div.table div.side div.select select {
+  border-color: white;
   cursor: pointer;
+  background: #445d76;
+  color: white;
+}
+body > div.wrapper > main div.tabella div.table div.side div.select select:focus {
+  box-shadow: none;
+  border-color: white;
+}
+body > div.wrapper > main div.tabella div.table div.side div.select select option {
+  color: white;
 }
 body > div.wrapper > main div.tabella div.table div.side div.select select option:first-child {
   color: gray;
 }
 body > div.wrapper > main div.tabella div.table div.side div.select p {
+  font-weight: 500;
   margin: 0%;
   padding: 0%;
   font-size: 1rem;
@@ -144,8 +154,21 @@ body > div.wrapper > main div.tabella div.table div.side div.select p {
   display: none;
 }
 body > div.wrapper > main div.tabella div.table div.side div.select p:hover {
-  font-weight: 900;
+  transform: scale(1.1);
+  font-weight: bold;
 }
+body > div.wrapper > main div.tabella div.table div.side button {
+  background-color: #212529;
+  border-color: #212529;
+}
+body > div.wrapper > main div.tabella div.table div.side button:hover {
+  border-color: white;
+}
+body > div.wrapper > main div.tabella div.table div.side button:focus {
+  box-shadow: none;
+  border-color: none;
+}
+
 .shown {
   display: "";
 }
@@ -154,16 +177,33 @@ body > div.wrapper > main div.tabella div.table div.side div.select p:hover {
   display: none;
 }
 
-@media screen and (max-width: 800px) {
-  body div.table {
+@media screen and (max-width: 768px) {
+  div.loading {
+    left: 0;
+    top: 80px;
     width: 100%;
   }
-  body div.table table tr td {
-    min-width: 4rem;
-    max-width: 6rem;
+
+  body div.tabella {
+    min-width: 90% !important;
   }
-  body div.table table tr td:last-child {
-    max-width: 4rem;
+  body div.tabella div.table {
+    width: 95% !important;
+  }
+  body div.tabella div.table table tr {
+    max-width: 95% !important;
+  }
+  body div.tabella div.table table tr td:last-child {
+    max-width: 5.5rem;
+  }
+}
+@media screen and (max-width: 400px) {
+  body div.tabella div.table table {
+    transform: scaleX(0.9);
+    max-width: 90% !important;
+  }
+  body div.tabella div.table table tr {
+    max-width: 95% !important;
   }
 }
 * {
@@ -175,6 +215,7 @@ body > div.wrapper > main div.tabella div.table div.side div.select p:hover {
 .wrapper {
   display: flex;
   height: 100vh;
+  background-color: #445d76;
 }
 .wrapper aside {
   width: 20%;
@@ -224,18 +265,20 @@ svg:hover {
     justify-content: flex-start;
     align-items: center;
   }
+
   div.wrapper {
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100vh;
-    background-color: red;
   }
+
   div.wrapper > aside {
     width: 100%;
     height: 80px;
     flex-direction: row !important;
   }
+
   .bar {
     display: block;
     width: 25px;
@@ -243,6 +286,7 @@ svg:hover {
     margin: 5px auto;
     background-color: white;
   }
+
   div.wrapper aside #list-menu {
     height: 100%;
     width: 100%;
@@ -255,6 +299,10 @@ svg:hover {
     margin: 0;
     font-size: 12px;
   }
+  div.wrapper aside #list-menu p:first-child {
+    margin-left: 10px;
+  }
+
   .discord-icon {
     height: 100%;
     flex-basis: 25%;
@@ -273,6 +321,7 @@ svg:hover {
   background: #5865f2;
   margin-left: 20px;
   margin-right: 20px;
+  overflow-y: hidden;
 }
 
 #myChart {
@@ -281,7 +330,7 @@ svg:hover {
 
 .chart {
   display: flex;
-  height: 100%;
+  height: 95%;
   width: 100%;
   align-items: center;
   justify-content: space-around;
@@ -305,13 +354,14 @@ svg:hover {
 
 @media (max-width: 1440px) {
   .chart {
-    flex-direction: column;
     align-items: space-between;
     margin-bottom: 1rem;
   }
+
   .container {
     width: 500px;
   }
+
   .chart2 {
     margin-left: 0;
   }
@@ -320,9 +370,11 @@ svg:hover {
   .chart {
     flex-direction: column;
   }
+
   .chart2 {
     margin-left: 0;
   }
+
   .container {
     width: 400px;
     align-self: center;
@@ -332,10 +384,13 @@ svg:hover {
   .chart {
     flex-direction: column;
   }
+
   .container {
     width: 300px;
   }
 }
 .visible {
   display: none !important;
-}/*# sourceMappingURL=style.css.map */
+}
+
+/*# sourceMappingURL=style.css.map */
