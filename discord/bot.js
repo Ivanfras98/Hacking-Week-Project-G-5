@@ -16,13 +16,9 @@ const client = new Discord.Client({
     "GUILD_MESSAGE_REACTIONS",
   ],
 });
-//Prefissi per i comandi
-const PREFIX = "!";
-//Comandi available
-const MODCOMMAND = "mod me";
 //Log per vedere se l'app parte
 client.on("ready", () => {
-  console.log("ciao sono un bot");
+  console.log("I'm online");
 });
 
 const apiData = "https://api.spaceflightnewsapi.net/v3/";
@@ -45,7 +41,6 @@ client.on("message", (msg) => {
   }
   if (msg.content === "/articles/authors") {
     let authors = [];
-    let lonelyAuthors = [];
     getApi().then((data) => {
       data.forEach((elem) => {
         if (!authors.find((e) => e === elem.newsSite)) {
@@ -64,5 +59,20 @@ client.on("message", (msg) => {
     });
   });
 });
+
+const welcomeCh = "1002605328669610146";
+const communicationCh = "1004418160159633548";
+
+client.on("guildMemberAdd", (member)=>{
+  const welcomeMessage = `Hello <@${member.id}> welcome to the discord server, my name is DevelBot, allow me to guide you during your journey!`
+  const directionMessage = `Please follow me to the ${member.guild.channels.cache.get(communicationCh)} channel!`
+  const channel = member.guild.channels.cache.get(welcomeCh)
+  const channel2 = member.guild.channels.cache.get(communicationCh)
+  channel.send(welcomeMessage)
+  setTimeout(() => channel.send(directionMessage), 3000); 
+
+  const commMessage = `Hello again <@${member.id}>, please type /articles or /articles/authors or /articles/ɪᴅ to interact with me.`;
+  channel2.send(commMessage)
+})
 
 client.login(process.env.BOT_TOKEN);
