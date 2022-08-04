@@ -1,0 +1,188 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro&display=swap');
+*{
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+    font-family: 'Source Serif Pro', serif;;
+}
+body > div.wrapper > main{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow-y: scroll;
+    div.tabella{
+        display: flex;
+        justify-content: center;
+
+        div.table{
+        div.loading{
+            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            right: 50%;
+            background: white;
+            width: 100%;
+            height: 100vh;
+            gap: 1rem;
+            &::after{
+                content: 'Loading your content..';
+            }
+            div.pallino{
+                background-color: black;
+                border-radius: 50%;
+                width: 10px;
+                height: 10px;
+                animation: bounce 1s infinite alternate;
+                &:nth-child(2){
+                animation: bounce 1s infinite alternate 0.2s;
+                }
+                &:nth-child(3){
+                    animation: bounce 1s infinite alternate 0.3s;  
+                    }
+                    @keyframes bounce {
+                        0% {
+                        }
+                        50%{}
+                        100% {
+                          transform: translateY(-20px);
+                        }
+                      }
+
+            }   
+        }
+        color: black;
+        width: 60%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-direction: column;
+        table {
+        padding: 5%;
+        overflow-x: auto;
+        width: 100%;
+        height: 100%;
+        tr {
+            &:first-child{
+                border: thin solid black;
+                background: linear-gradient(to top, rgba(44, 62, 80, .7), rgba(76, 161, 175, .7));
+            }
+            &:nth-child(odd):not(:first-child){
+                background-image: linear-gradient(to right, rgba(44, 62, 80, .7), rgba(76, 161, 175, .7));
+
+            }
+            &:nth-child(even){
+                background-image: linear-gradient(to left, rgba(44, 62, 80, .7), rgba(76, 161, 175, .7));
+
+            }
+            max-height: 10%;
+            th{
+                text-align: center;
+            }
+            td{
+                min-width: 6rem;
+                padding: 2%;
+                border: thin solid black;
+                text-align: center;
+
+                    h4{
+                        font-size: .9em;
+                        font-weight: 600;
+                        margin: 0%;
+                    }
+
+                    a{
+                        text-decoration: none;
+                        font-weight: 900;
+                        color: red;
+                    }
+
+                    p{
+                        margin: 0%;
+                    }
+
+                &:last-child{
+                    max-height: 160px;
+                    max-width: 200px;
+                    padding: 0px;
+                }
+
+                img{
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+    }
+    div.side{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 3%;
+        width: 100%;
+    
+        div.select{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50%;
+            gap: 5px;
+                select{
+                 cursor: pointer;
+
+                 option:first-child{
+                    color: gray
+                 }
+                }
+
+                p{
+                    margin: 0%;
+                    padding: 0%;
+                    font-size: 1rem;
+                    cursor: pointer;
+                    display: none;
+                    &:hover{
+                        font-weight: 900;
+                    }
+                }
+            }
+        
+        button{
+
+        }
+    }
+}
+}
+}
+
+.shown{
+    display: '';
+}
+.hidden{
+    display: none;
+}
+
+@media screen and (max-width: '800px'){
+    body {
+        div.table{
+            width: 100%;
+            table{
+                tr{
+                    td{
+                        min-width: 4rem;
+                        max-width: 6rem;
+
+                        &:last-child{
+                            max-width: 4rem;
+                            img{
+                                
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

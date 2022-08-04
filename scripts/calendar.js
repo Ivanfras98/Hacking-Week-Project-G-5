@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
         start: element.publishedAt,
         allDay: false,
         display: "list-item",
-        backgroundColor: "rebeccapurple",
+        backgroundColor: "#5865f2",
       });
     })
   );
